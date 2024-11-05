@@ -2,7 +2,7 @@ Gheorghe Marius Razvan 324CA
 
 Tema4 Pcom
 
-Am folosit 2 sleepdays.
+
 In implementarea temei am plecat de la laboratorul 9(in mare parte requests).
 Am implementat toate comenzile specificate in tema.
 
