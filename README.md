@@ -1,72 +1,28 @@
 Gheorghe Marius Razvan 324CA
 
-Tema4 Pcom
+Project 4 - Pcom
 
+In this project, I based my implementation on Lab 9 (mostly focusing on requests). I implemented all the commands specified in the assignment.
 
-In implementarea temei am plecat de la laboratorul 9(in mare parte requests).
-Am implementat toate comenzile specificate in tema.
+To create the JSON files, I used the parson library, which provides all necessary functionalities for working with JSON, and is easy to integrate and understand.
 
-Pentru a crea fisierele JSON am folosit bibilioteca parson
-care ofera toate functionalitatile pentru lucru cu JSON,
-dar este si usor de integrat si de inteles.
+In the main function, the program begins by reading commands, and depending on the verification, it executes the given command.
 
+Commands:
+"register" calls the register_user function: it checks if a user is already logged in; if not, it proceeds to allocate space and reads the username and password. If they are alphanumeric, it validates them and creates a JSON object. It opens a connection with the server, sends a request, receives the response, and checks if it executed with SUCCESS or an ERROR (if the username is already taken). Finally, it closes the connection and frees the memory.
 
-In functia main incep programul,prin citirea comenzilor iar in functie 
-de verificare execut comanda care a fost data.
+"login" calls the login function, which checks if there is an active login. If not, it verifies if the username and password are valid, then creates a JSON object, opens a connection to the server, sends a POST request, and checks the response. If the HTTP response contains "OK," it extracts the session cookie and updates the cookie counter. At the end, it frees allocated resources and closes the connection.
 
-In comanda "register" este apelata functia register_user:
-verifica daca nu cumva utilizatorul este deja logat,daca nu este nimeni
-merg mai departe aloc spatiu si citesc username ul si parola,
-daca sunt caractere alfanumerice le validez si creez un obiect JSON
-Deschid o legatura cu serverul iar apoi trimit o cerere la server apoi
-iau raspunsul primit si verific daca s a executat cu SUCCES sau Eroare(
-in caz ca username ul a mai fost folosit) apoi inchid conexiunea si 
-eliberez memoria.
+"enter_library" calls the enter_library function, opens a connection to the server, and sends an HTTP GET request. Depending on the response, it extracts the JWT token to use in subsequent functions. In case of an error, it means there is no authorization to enter the library.
 
-Comanda "login" apeleaza functia login unde verifica daca nu cumva
-este o logare activa in caz ca nu verific daca username ul si parola
-sunt valide apoi creez un obiect JSON ,deschid conexiunea cu serverul.
-timit o cerere de tip POST pe care o trimit iar raspunsul primit
-il verific in caz ca raspunsul HTTP contine OK voi extrage cookie ul de sesiune
-si actualizez contorul de cookie uri.La final eliberez resursele alocate si
-inchid conexiunea.
+"get_books" calls the get_books function, starts a connection with the server, sends an HTTP GET request, and then examines the response to check if it is "OK." It searches for the beginning of the "[" character, indicating the JSON object that needs to be displayed. Otherwise, it shows the error case.
 
-Comanda "enter_library" apeleaza functia enter_library deschid conexiunea
-cu serverul,trimit cererea http de tip get_request iar in functie de raspuns
-extrag token ul in jwt pentru a l utiliza in functiile urmatoare iar in caz
-de eroare inseamna ca nu am autorizatia de a intra in library.
+"get_book" calls the get_book function, where it checks if the user is registered in the library, reads and validates the ID, constructs the API path using the book’s ID to form the GET request endpoint, and sends the request to the server. It checks the response; if it contains "OK," it retrieves the JSON object content using the basic_extract_json_response() function. Otherwise, it displays an error case. Finally, it closes the server connection and frees resources.
 
-Comanda "get_books" apeleaza functia get_books,se incepe o conexiune
-cu serverul trimite o cerere http get_request la server iar apoi extrage
-raspunsul si vede daca este "OK" caut inceputul caracterului "[" ce indica
-obiectul JSON pe care trebuie sa il afisez altfel afisez cazul de eroare.
+"add_book" calls the add_book function, where it verifies access to the library via the JWT token, then reads the book’s specific data (title, author, etc.). It checks that all book data is valid (not empty strings) and confirms that page_count is a valid number. It creates a JSON object to add book details and calls the POST request with the authorization token. If the response contains "OK," it indicates SUCCESS; otherwise, it shows an ERROR.
 
-Comanda "get_book" apeleaza functia get_book unde verific daca sunt inregistrat
-in library apoi citesc si validez id ul,construiesc path ul catre API folosind
-id ul cartii formand endpoint ul pentru cererea GET.Trimit cererea la server
-iar apoi verific raspunsul in caz ca raspunsul contine "OK" preiau
-continutul obiectului JSON cu functia "basic_extract_json_response()" altfel
-cazul de eroare.La final inchid conexiunea cu serverul si eliberez resursele.
+"delete_book" calls the delete_book function, which deletes a book with a given ID. First, it verifies access to the library, checks the validity of the ID, and constructs the URL path for the API with the book’s ID for identification. It calls the DELETE request along with the authentication token and cookie. If the server response contains "OK," it indicates SUCCESS; otherwise, ERROR.
 
-Comanda "add_book" apeleaza functia add_book unde verific prin tokenul jwt
-daca am acces la library apoi citesc datele specifice cartii(titlu,autor etc)
-Verific validitatea tututor datelor despre carte sa nu fie "" iar la page_count
-verific sa fie numar valid,creez obiectul JSON pentru a adauga detaliile despre 
-carte apelez cererea POST cu tokenul pentru autorizatie.Daca raspunsul 
-contine "OK" inseamna ca este cu SUCCESS daca nu EROARE.
+"logout" calls the logout function, which sends a GET request with the necessary endpoint along with the token and cookie. The response received through receive_from_server() is checked for the "OK" message, indicating SUCCESS, after which the cookie count is decreased, and the JWT is set to NULL. It then frees the used resources.
 
-Comanda "delete_book" apeleaza functia delete_book unde sterg o carte cu un 
-id dat, inainte verific daca am acces la library apoi verifica 
-validitatea id ului si construiesc calea URL pentru API alaturi de 
-id ul cartii pentru identificare apelez cererea de DELETE impreuna cu 
-tokenul pentru autentificare si cookie iar daca raspunsul de la server 
-contine "OK" este cu SUCCESS daca nu EROARE.
-
-Comanda "logout" apeleaza functia logout unde se trimite
-o cerere get_request cu endpointul necesar alaturi de token si cookie.
-Raspunsul primit prin receive_from_server() este verificat daca contine mesajul
-"OK" care indica un SUCCES si se scade numarul de cookieuri si setez jwt la NULL.
-eliberez resursele folosite.
-
-Comanda "exit" se executa prin finalizarea executiei programului.
-
+"exit" is executed by terminating the program.
