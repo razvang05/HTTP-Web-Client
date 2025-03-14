@@ -71,10 +71,3 @@ In this project, I based my implementation on Lab 9 (mostly focusing on requests
 
 - **parson**: A simple JSON library that provides functionalities to parse, create, and manipulate JSON data. This library was used throughout the project for creating and parsing the JSON objects.
 
-### How to Run
-
-1. Make sure you have the necessary dependencies installed (e.g., `parson` library).
-2. To run the program, use the following command:
-
-```bash
-./pcom_program <command>
