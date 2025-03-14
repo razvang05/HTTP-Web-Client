@@ -1,8 +1,8 @@
 # Project 4 - Pcom
 
-## Gheorghe Marius Razvan  
-### Date: 20.05.2024
-### Email: rzvrazvan03@gmail.com
+### **Name:** Gheorghe Marius Razvan  
+### **Date:** 20.05.2024
+### **Email:** rzvrazvan03@gmail.com
 
 
 
